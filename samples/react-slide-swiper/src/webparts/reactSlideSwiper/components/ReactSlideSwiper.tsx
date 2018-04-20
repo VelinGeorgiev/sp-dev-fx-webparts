@@ -1,3 +1,4 @@
+/// <reference types="swiper" />
 import * as React from 'react';
 import styles from './ReactSlideSwiper.module.scss';
 import { IReactSlideSwiperProps } from './IReactSlideSwiperProps';
@@ -5,8 +6,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { IReactSlideSwiperState } from './IReactSlideSwiperState';
 import { ListItem } from '../services/ListItem';
 import Card from './Card/Card';
-
-const Swiper = require('swiper/dist/js/swiper.min');
+import * as a from 'swiper';
 
 export default class ReactSlideSwiper extends React.Component<IReactSlideSwiperProps, IReactSlideSwiperState> {
   
@@ -65,7 +65,7 @@ export default class ReactSlideSwiper extends React.Component<IReactSlideSwiperP
     );
   }
 
-  private setSwiper(): void {
+  private setSwiper(): any {
     const opts = this.props.swiperOptions;
 
     const options: any = {
@@ -118,6 +118,11 @@ export default class ReactSlideSwiper extends React.Component<IReactSlideSwiperP
       };
     }
 
-    return new Swiper(`.container-${this.uniqueId}`, options);
+    if (DEBUG) {
+      const s = require('swiper/dist/js/swiper.min');
+      new s(`.container-${this.uniqueId}`, options);
+    } else {
+      return new Swiper(`.container-${this.uniqueId}`, options);
+    }
   }
 }
